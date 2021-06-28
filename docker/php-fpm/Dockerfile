@@ -180,15 +180,16 @@ ADD ./startup.sh /opt/startup.sh
 RUN apt-get install -y htop git
 
 ARG ARG_PHP_VERSION=7.3
+
 #Install the PHP gd library
-RUN if [ $ARG_PHP_VERSION = "7.3" ]; then \
+RUN if [ ${ARG_PHP_VERSION} = "7.3" ]; then \
     docker-php-ext-configure gd \
         --with-jpeg-dir=/usr/lib \
         --with-freetype-dir=/usr/include/freetype2 && \
     docker-php-ext-install gd \
 ;fi
 
-RUN if [ $ARG_PHP_VERSION = "7.4" ]; then \
+RUN if [ ${ARG_PHP_VERSION} = "7.4" ] || [ ${ARG_PHP_VERSION} = "8.0" ] ; then \
     docker-php-ext-configure gd --with-freetype --with-jpeg && docker-php-ext-install gd \
 ;fi
 
